@@ -5,6 +5,10 @@ import pygame
 import pygame.camera
 import io
 
+pygame.init()
+pygame.camera.init()
+cam_list = pygame.camera.list_cameras()
+cam = pygame.camera.Camera(cam_list[0],(32,24))
 
 engrenagem = b'iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAACXBIWXMAAADsAAAA7AF5KHG9AAAAGXRFWHRTb2Z0d2FyZQB3d3cuaW5rc2NhcGUub3Jnm+48GgAAA9tJREFUWIW113vM1mMYB/BPpd6ISiTN20pvrJpSijHLHw1RGLZMlsbmbP0VMrWVkeY0mUOMsLGZ01ZYOogctuaUKBE15/MhK5Ux8sf3fvY+Pb1vJ0/f7dnz/K77cF2/+/5e3+t6+H8Yj9+wDr+jYXc3aLsHTi/ES+iMAbgbTdiIXhiJBThoD/beKcZhNaZhExZjcBmbiC+wFtfj3b0RxGpcUn53a2F8H3Qp38twZb0D6Ic/0KE8D8GjWIip2LfYL8YitKmX47Y4S47+xWI7Qcg3FsfgVrxW5h6Gr8rY0fUIoAk/4UEMLbYFQrhqPIvTy++r8QyW1COAfninxrYGB9bYphTHFRyFV3a08a6m4V8YWIIYXWzvYUzNXqOF/TAHT5W1dUEjzsbL5bmPpNxNmCDa8EAZGyQZ01f0olXsjhB9g/VyrA2S88cJNwbgHlxR5jZJtvyIDbvhY6dYi8skvU7VnHYV9NJM0qWYVE/nMBxfY67c9fc4t4zNkdT7XLJhnma9qCuGYbqcwiTMkmz4tjg8QjShAy7A0+VzZEub7QoHHhPBWYdP8EsJYKtcyZmaT+Nv4cohIlTnl3U9cJrUiGt35rArzqh6Xi5K17c4Gl7sTTixZm07Eah5UqzelmwZVwL8EJ/ZATe6Sq7/jBtEetfjgDK+qGx+ngjRlxhVtb4jVoge7C9FaQh6o72Q9mHMaMl5l+J8CnriDdxS3ryCBqkJC8rbD5R0PLmMD8C9ckUH432R4tW4r8xZictxeG0Ag4XhvVuKrhV0LA5mCJ+2SGVsxB2YXOa1Ky80QgrUWyJc2+EckdhqDMNdUojG25a4U6XgtClOfhUVJKl4UtXcO6Wb2k+UcyHbZ0Fv6XIqmIiH8EFZMEp4UMnvueguGfGv8OM5qZLz5TobcbzI+Ku4TZqaF6odPyLN5WZhN7nflSXiatwu5Kzgdc0p2lk0YFY5leuElEvl+Alxa8u4JaLrnapsU7Scs434qAX7CinbG+XaLkL/MtZWKudIzJSTQtKkgg2SuxU0aLmQbNF6+71Zjnq+6MeNwpuxooQ95GROqV34PFZJI9mz2EbI8dbyZKIQsoIn5Qr+1NwF9ynrZksqfif86VI+26G96PlMXFNlny1sPlY0frIoWfcqR6tEKw5tYd9uch1DbXvarWK0KFw1LpZmc7n8Calux6eVIOuC/vhBisuuoqvo/YQ9dVp9v5uEwf+IqEyXClbb2w/C/SK7neROt+5pALVokjteLER7Ap9KYYHHhVQ3S/OxBpfWy3l1EFdVPX+smWBvam4sxkjDsdexTP56V5SysZ6b/wev2NhqMojr9gAAAABJRU5ErkJggg=='
 
@@ -54,7 +58,11 @@ def interface_webcam():
     # ---===--- Event LOOP Read and display frames, operate the GUI --- #
 
     #cap = cv.VideoCapture(0)
+    
+    cam.start()
     while True:
+        image1 = cam.get_raw()
+        #image1 = pygame.transform.scale(image1,(640,480))
         button, values = window.read()
 
         if button == sg.WINDOW_CLOSED:
@@ -75,13 +83,12 @@ def interface_webcam():
         # bio = io.BytesIO()  # a binary memory resident stream
         # img.save(bio, format='PNG')  # save image as png to it
         # imgbytes = bio.getvalue()  # this can be used by OpenCV hopefully
-        # window.FindElement('image').Update(data=imgbytes)
+        window.FindElement('image').Update(data=image1)
+    
+
 
 if __name__ == '__main__':
-    pygame.init()
-    pygame.camera.init()
-    cam_list = pygame.camera.list_cameras()
-    print(cam_list)
     result = login()
     if result is True:
         interface_webcam()
+
