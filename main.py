@@ -1,6 +1,5 @@
 import sys
 import PySimpleGUI as sg
-import cv2 as cv
 from PIL import Image
 import pygame
 import pygame.camera
@@ -69,14 +68,14 @@ def interface_webcam():
 
         img = 'img.png'
 
-        gray = cv.cvtColor(img, cv.COLOR_BGR2GRAY)
+        # gray = cv.cvtColor(img, cv.COLOR_BGR2GRAY)
 
-        # let img be the PIL image
-        img = Image.fromarray(gray)  # create PIL image from frame
-        bio = io.BytesIO()  # a binary memory resident stream
-        img.save(bio, format='PNG')  # save image as png to it
-        imgbytes = bio.getvalue()  # this can be used by OpenCV hopefully
-        window.FindElement('image').Update(data=imgbytes)
+        # # let img be the PIL image
+        # img = Image.fromarray(gray)  # create PIL image from frame
+        # bio = io.BytesIO()  # a binary memory resident stream
+        # img.save(bio, format='PNG')  # save image as png to it
+        # imgbytes = bio.getvalue()  # this can be used by OpenCV hopefully
+        # window.FindElement('image').Update(data=imgbytes)
 
 if __name__ == '__main__':
     pygame.init()
