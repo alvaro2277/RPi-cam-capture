@@ -55,7 +55,7 @@ def interface_webcam():
     window = sg.Window('Tela de visualização da Webcam',
                        location=(800, 400))
     window.Layout(layout).Finalize()
-
+    window.Maximize()
     # ---===--- Event LOOP Read and display frames, operate the GUI --- #
 
     #cap = cv.VideoCapture(0)
